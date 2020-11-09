@@ -1,0 +1,16 @@
+﻿@model TemplateModel
+@{
+    ViewBag.Ref = "template";
+    ViewBag.Title = "模板";
+}
+
+<div class="text-center">
+    <h1>Hi</h1>
+    @if (Model.Ids.Count != 0)
+    {
+        @foreach (var id in Model.Ids)
+        {
+            <p>@id</p>
+        }
+    }
+</div>
