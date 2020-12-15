@@ -1,2 +1,2 @@
-# EpidemicManager
-传染病信息管理系统
+# SnakeGe
+格蛇社
