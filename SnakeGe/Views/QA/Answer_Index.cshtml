@@ -1,0 +1,53 @@
+﻿@model AModel
+@{
+    ViewBag.Ref = "QA/Answer_Index";
+    ViewBag.Title = "回答目录";
+}
+
+<div class="text-center">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3><strong>可查看的未回答问题</strong></h3>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="card-columns">
+    @for (int i = 0; i < @Model.n; i++)
+    {
+
+
+        <div class="card  " style="width: 16rem;">
+            <div class="card-body">
+                <h5 class="card-title  text-success">
+                    @Model.question[i]
+                </h5>
+
+            </div>
+            <ul class=" list-group list-group-flush">
+                <li class="list-group-item ">
+                    用户ID：@Model.ID_user[i]
+                </li>
+                <li class="list-group-item">
+                    <form method="post" action="Answer">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <input type="text" style="display:none" name="question_id" class="form-control" value="@Model.ID_question[i]" readonly />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">查看</button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+
+        </div>
+
+
+    }
+</div>
