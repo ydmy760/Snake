@@ -1,0 +1,74 @@
+﻿@model QAListModel
+@{
+    ViewBag.Ref = "QA/Index_QA";
+    ViewBag.Title = "回答目录";
+}
+
+<div class="text-center">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3><strong>本人提问</strong></h3>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="card-columns">
+    @for (int i = 0; i < @Model.n_q; i++)
+    {
+        //未被回答的问题
+
+        <div class="card  " style="width: 16rem;">
+            <div class="card-body">
+                <h5 class="card-title  text-success">
+                    @Model.question_q[i]
+                </h5>
+
+            </div>
+            <ul class=" list-group list-group-flush">
+                <li class="list-group-item ">
+                    提问日期：@Model.date_q_q[i]
+                </li>
+                <li class="list-group-item ">
+                    提问日期：@Model.date_q_q[i]
+                    提问时间：@Model.time_q_q[i]
+                </li>
+                <li class="list-group-item">
+                    现在尚未被回答
+                </li>
+            </ul>
+        </div>
+    }
+    @for (int i = 0; i < @Model.n_a; i++)
+    {
+        //
+
+        <div class="card  " style="width: 16rem;">
+            <div class="card-body">
+                <h5 class="card-title  text-success">
+                    @Model.question_a[i]
+                </h5>
+
+            </div>
+            <ul class=" list-group list-group-flush">
+                <li class="list-group-item ">
+                    专家ID：@Model.ID_exp[i]
+                </li>
+                <li class="list-group-item ">
+                    提问日期：@Model.date_q_a[i]
+                    提问时间：@Model.time_q_a[i]
+                </li>
+                <li class="list-group-item ">
+                    回答内容：@Model.answer
+                </li>
+                <li class="list-group-item ">
+                    回答日期：@Model.date_a[i]
+                    回答时间：@Model.time_a[i]
+                </li>
+                <li class="list-group-item">
+                    已被回答
+                </li>
+            </ul>
+        </div>
+    }
+</div>
