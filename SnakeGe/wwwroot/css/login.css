@@ -1,0 +1,32 @@
+﻿body {
+    background-color:cadetblue;
+}
+
+#div0{
+    
+}
+
+p {
+    color: red;
+    font-family: KaiTi;
+}
+
+#div2 {
+    text-align: center;
+    margin: 0 auto;
+    width: 800px;
+    background-color:white;
+    border-radius:10px;
+}
+
+#div1>img{
+    height:150px;
+}
+
+#input_1{
+    margin-right:10px;
+}
+
+h1{
+    font-family:KaiTi;
+}

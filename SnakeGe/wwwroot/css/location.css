@@ -1,0 +1,15 @@
+﻿body{
+
+}
+
+#divMap {
+    width: 400px;
+    height: 600px;
+    float: left;
+}
+
+#abcd{
+    width:400px;
+    float:left;
+    background-color:aqua;
+}
