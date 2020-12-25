@@ -1,0 +1,66 @@
+﻿@model LoginModel
+@{
+    ViewBag.Ref = "login";
+    ViewBag.Title = "登录";
+}
+
+
+<body>
+ 
+    <div id="div0">
+        <div id="div2" style="padding:10px;">
+            @if (Model.State == "wrong_db")
+            {
+                <p>sorry 登录失败,账号未注册</p>
+            }
+            @if (Model.State == "wrong_pass")
+            {
+                <p>sorry 登录失败，密码错误</p>
+            }
+            @if (Model.State == "empty")
+            {
+                <p>选项不能为空</p>
+            }
+            @if (Model.State == "success")
+            {
+                <script>
+                    alert("success");
+                </script>
+            }
+            <div id="div1" style="padding:10px;">
+                <img src="~/res/snake.png" />
+                <h1>格蛇社</h1>
+            </div>
+            <br />
+            <form id="div3" action="/Login/Index" method="post" role="form" class="bs-example bs-example-form">
+                <div class="input-group">
+                    <label for="name">&ensp;账号&ensp;</label>
+                    <input name="id" placeholder="ID" class="form-control" />
+                </div>
+                <br />
+                <div class="input-group">
+                    <label for="name">&ensp;密码&ensp;</label>
+                    <input name="password" type="password" placeholder="password" class="form-control" />
+                </div>
+                <br />
+                <div id="checkboxDiv" class="form-group">
+                    <input type="checkbox" name="adictor" />&ensp;我是爱好者&ensp;&ensp;&ensp;
+                    <input type="checkbox" name="expert" />&ensp;我是专家
+                </div>
+                <br />
+                <div style="margin-bottom:10px;">
+                    <button id="input_1" class="btn btn-success" type="submit">Login </button>
+                    <a href="Logon">注册</a>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("input[name=type]").on("click",function () {
+
+            $("input[name=type]").not(this).prop("checked", false);
+        });
+
+    </script>
+</body>

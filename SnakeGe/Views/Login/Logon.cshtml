@@ -1,0 +1,62 @@
+﻿@model LogonModel
+@{
+    ViewBag.Ref = "login";
+    ViewBag.Title = "注册";
+}
+
+<body>
+    <div id="div2" style="padding:10px;">
+        @if (Model.Logon == "empty")
+        {
+            <p>选项不能为空</p>
+        }
+        @if (Model.Logon == "success")
+        {
+            <p>注册成功，您的ID是：</p>@Model.id
+            <br />
+            <button onclick="login()" class="btn btn-primary btn-xs">我知道了</button>
+        }
+        @if (Model.Logon == "wrong")
+        {
+            <p>请检查您的密码</p>
+        }
+        <form action="/Login/Logon" method="post" role="form">
+            <div id="div1" style="padding:10px;">
+                <img src="~/res/snake.png" />
+                <h1>格蛇社</h1>
+            </div>
+            <div class="input-group">
+                <label for="name">&ensp;&ensp;用户名&ensp;</label>
+                <input type="text" name="user_name" placeholder="请输入用户名" class="form-control" />
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="name">&ensp;&ensp;&ensp;&ensp;密码&ensp;</label>
+                <input name="password" type="password" placeholder="请输入密码" class="form-control" />
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="name">确认密码&ensp;</label>
+                <input name="password_next" type="password" placeholder="确认密码" class="form-control" />
+            </div>
+            <br />
+            <div id="checkboxDiv" class="form-group"style="margin-bottom:20px;">
+                <input type="checkbox" name="adictor" />&ensp;我是爱好者&ensp;&ensp;&ensp;
+                <input type="checkbox" name="expert" />&ensp;我是专家
+                <br />
+                <br />
+                <button id="input_1" class="btn btn-success" type="submit">提交</button>
+                <br />
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $("input[name=type]").on("click",function () {
+
+            $("input[name=type]").not(this).prop("checked", false);
+        });
+        function login() {
+            window.location.href = "/Views/index";
+        }
+    </script>
+</body>

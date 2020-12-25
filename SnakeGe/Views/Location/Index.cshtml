@@ -1,0 +1,40 @@
+﻿@model LocationModel
+@{
+    ViewBag.Ref = "location";
+    ViewBag.Title = "模板";
+}
+
+
+<body onload="getloc()">
+    <form action="Location/Index" method="post">
+        <input id="aaa" name="province"/>
+        <button type="submit">查看我的蛇类信息</button>
+    </form>
+    <div id=" location_body">
+
+        <div id="divMap"></div>
+        <div id="abcd">
+            @for (var i = 0; i < Model.snake.Count; i++)
+            {
+                <div>目：</div>@Model.snake[i][1]
+                <br />
+                <div>科：</div>@Model.snake[i][2]
+                <br />
+                <div>属：</div>@Model.snake[i][3]
+                <br />
+                <div>种：</div>@Model.snake[i][4]
+                <br />
+                <div>有毒吗：</div>@Model.snake[i][5]
+                <br />
+                <div>省：</div>@Model.snake[i][6]
+                <br />
+                <div>市：</div>@Model.snake[i][7]
+                <br />
+                <div>简介：</div>@Model.snake[i][8]
+                <br />
+            }
+        </div>
+    </div>
+    <script src="//api.map.baidu.com/api?v=2.0&ak=m0hhfYxquB1A96jf3mZS4GE36kC7Kcat"></script>
+      
+</body>
