@@ -27,7 +27,7 @@ namespace EpidemicManager.Controllers
             m.date_q = DateTime.Now.ToString("yyyy-MM-dd");
             m.time_q = DateTime.Now.ToString("T");
             
-            Sql.Execute("INSERT INTO UserAsk(ID,date,time,detail,isAns)  VALUES(@0,@1,@2,@3,@4)", m.ID_user, m.date_q, m.time_q, m.question,0);
+            Sql.Execute("INSERT INTO OnlineQ(ID,date,time,detail,isAns)  VALUES(@0,@1,@2,@3,@4)", m.ID_user, m.date_q, m.time_q, m.question,0);
             return RedirectToAction("Index_QA");//这个东西还没有
 
         }
@@ -45,7 +45,7 @@ namespace EpidemicManager.Controllers
             var list_q = new List<string>();
             var list_d = new List<string>();
             var list_u = new List<string>();
-            var name = Sql.Read("SELECT ID, detail,id_number FROM UserAsk WHERE isAns=@0", 0);
+            var name = Sql.Read("SELECT ID, detail,id_number FROM OnlineQ WHERE isAns=@0", 0);
             var Con = 0;
             foreach (DataRow n in name)
             {
@@ -66,7 +66,7 @@ namespace EpidemicManager.Controllers
             QAModel m = new QAModel();
             m.ID_exp = HttpContext.Session.GetString("userId");
             m.ID_question = Request.Form["question_id"];
-            var name = Sql.Read("SELECT ID, detail,date,time FROM UserAsk WHERE id_number=@0", m.ID_question);
+            var name = Sql.Read("SELECT ID, detail,date,time FROM OnlineQ WHERE id_number=@0", m.ID_question);
             foreach (DataRow n in name)
             {
                 m.ID_user = n[0].ToString();
@@ -85,11 +85,11 @@ namespace EpidemicManager.Controllers
             m.date_q = DateTime.Now.ToString("yyyy-MM-dd");
             m.time_q = DateTime.Now.ToString("T");
             m.ID_question= Request.Form["question_ID"];
-            Sql.Execute("INSERT INTO ExpAns(ID,date,time,detail,ID_Q)  VALUES(@0,@1,@2,@3,@4)", m.ID_user, m.date_q, m.time_q, m.question, m.ID_question);
+            Sql.Execute("INSERT INTO ExperAnswer(ID,date,time,detail,ID_Q)  VALUES(@0,@1,@2,@3,@4)", m.ID_user, m.date_q, m.time_q, m.question, m.ID_question);
             //上面这句有问题
             //12.10最后那个isAns改了问题的ID属性，不知道数据库里有没有
             //我不知道这个表叫啥
-            Sql.Execute("UPDATE UserAsk SET isAns = @0 WHERE id_number = @1", m.ID_question,1);
+            Sql.Execute("UPDATE OnlineQ SET isAns = @0 WHERE id_number = @1", m.ID_question,1);
             return RedirectToAction("Answer_Index");
         }
 
@@ -108,7 +108,7 @@ namespace EpidemicManager.Controllers
             var list_t = new List<string>();
             var list_dd = new List<string>();
             var ID_user = HttpContext.Session.GetString("userId");
-            var name = Sql.Read("SELECT date,time detail,id_number FROM UserAsk WHERE ID=@0 AND isAns=@1",ID_user,0);
+            var name = Sql.Read("SELECT date,time detail,id_number FROM OnlineQ WHERE ID=@0 AND isAns=@1", ID_user,0);
             var Con = 0;
             foreach (DataRow n in name)
             {
@@ -132,7 +132,7 @@ namespace EpidemicManager.Controllers
             var list_exp = new List<string>();
             var list_t_a = new List<string>();
             var list_d_a = new List<string>();
-            name = Sql.Read("SELECT date,time detail,id_number FROM UserAsk WHERE ID=@0 AND isAns=@1", ID_user, 1);
+            name = Sql.Read("SELECT date,time detail,id_number FROM OnlineQ WHERE ID=@0 AND isAns=@1", ID_user, 1);
             Con = 0;
             foreach (DataRow n in name)
             {
@@ -141,7 +141,7 @@ namespace EpidemicManager.Controllers
                 list_d.Add(n[2].ToString());
                 list_q.Add(n[3].ToString());
                 //从回答的表里找回答
-                var ans = Sql.Read("SELECT ID, detail,date,time FROM UserAsk WHERE id_number=@0", n[3].ToString());
+                var ans = Sql.Read("SELECT ID, detail,date,time FROM ExperAnswer WHERE id_number=@0", n[3].ToString());
                 foreach(DataRow a in ans)
                 {
                     list_exp.Add(a[0].ToString());

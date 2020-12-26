@@ -28,7 +28,7 @@ namespace EpidemicManager.Controllers
             m.date = DateTime.Now.ToString("yyyy-MM-dd");
             m.time = DateTime.Now.ToString("T");
 
-            Sql.Execute("INSERT INTO Blog(ID,date,time,detail.title)  VALUES(@0,@1,@2,@3)", m.userID, m.date, m.time, m.content,m.title);
+            Sql.Execute("INSERT INTO Blog(ID,date,time,detail,title)  VALUES(@0,@1,@2,@3)", m.userID, m.date, m.time, m.content,m.title);
             return RedirectToAction("Index");//不知道这个有没有这个，应该是主页面
         }
 
