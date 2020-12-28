@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,9 +67,15 @@ namespace SnakeGe.Controllers
         }
 
 
-        public IActionResult Index(string id, string password, string adictor,string expert)
+        public IActionResult Index(string id, string password, string adictor,string expert,string path)
         {
             LoginModel model = new LoginModel();
+            var jumppath = "null";
+            if (path != null)
+            {
+                jumppath = path.StartsWith("/") ? path : "/" + path;
+            }
+          
             if (id == null && password == null)
             {
                 model.State = null;
@@ -114,6 +120,7 @@ namespace SnakeGe.Controllers
                         session.SetString("ID", id);
                         session.SetString("UserKind", userkind);
                         session.SetString("UserName", username);
+                        model.path = jumppath;
                     }
                     else
                     {
@@ -123,6 +130,12 @@ namespace SnakeGe.Controllers
                 }
                 return View(model);
             }
+        }
+
+        public void Logout()
+        {
+            var session = HttpContext.Session;
+            session.Clear();
         }
     }
 }
