@@ -1,0 +1,71 @@
+﻿@model LocationModel
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewBag.Ref = "location";
+    ViewBag.Title = "报错";
+    var session = ViewContext.HttpContext.Session;
+    var userKind = session.GetString("UserKind");
+}
+<body>
+    <div class="input-group">
+        <label for="name">&ensp;您要修改的记录号:&ensp;</label>
+        <select id="div_1">
+            @for (var i = 0; i < @Model.numbers.Count; i++)
+            {
+                <option value="@Model.numbers[i]">@Model.numbers[i]</option>
+            }
+        </select>
+        <button onclick="change()">确定</button>
+    </div>
+    <br />
+    <form id="div_03"role="form" class="bs-example bs-example-form">
+        <div id="div_2">
+            <div class="input-group">
+                <label for="name">&ensp;编号:&ensp;</label>
+                <input id="input1" type="text" placeholder="编号" class="form-control" />
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="name">&ensp;种名:&ensp;</label>
+                <input id="input2" type="text" placeholder="种名" class="form-control" />
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="name">&ensp;别名:&ensp;</label>
+                <input id="input8" type="text" placeholder="种名" class="form-control" />
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="name">&ensp;目:&ensp;</label>
+                <input id="input3" type="text" placeholder="目" class="form-control" />
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="name">&ensp;科:&ensp;</label>
+                <input id="input4" type="text" placeholder="科" class="form-control" />
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="name">&ensp;属:&ensp;</label>
+                <input id="input5" type="text" placeholder="属" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="name">&ensp;毒性:&ensp;</label>
+                <input type="checkbox" id="input6_1" />&ensp;有毒&ensp;&ensp;&ensp;
+                <input type="checkbox" id="input6_2" />&ensp;无毒
+            </div>
+            <div class="input-group">
+                <label for="name">&ensp;简介:&ensp;</label>
+                <textarea id="input7" rows="10" cols="80">简介</textarea>
+            </div>
+        </div>
+    </form>
+        <script type="text/javascript">
+            $("input[name=type]").on("click", function () {
+
+                $("input[name=type]").not(this).prop("checked", false);
+            });
+
+        </script>
+</body>
