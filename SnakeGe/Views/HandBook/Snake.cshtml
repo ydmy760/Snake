@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Ref = "Snake";
+    ViewBag.Title = "格蛇志";
+}
+
+
+        <h1>格蛇志--@Model.snake.speciesName</h1>
+        @if (Model.snake.is_Poisonous == true)
+        {
+            <p class="text-error">有毒！</p>
+            <a asp-controller="HandBook" asp-action="Venom" asp-route-SnakeID="@Model.snake.snake_ID">查看毒液杀伤力</a>
+        }
+
+        <div id="section">
+            <h2>目--order</h2>
+            <p>
+                @Model.snake.order
+            </p>
+        </div>
+
+        <div id="section">
+            <h2>科--family</h2>
+            <p>
+                @Model.snake.family
+            </p>
+        </div>
+
+
+        <div id="section">
+            <h2>属--genus</h2>
+            <p>
+                @Model.snake.genus
+            </p>
+        </div>
+
+        <div id="section">
+            <h2>别名，俗称</h2>
+            <p>
+                @Model.snake.names
+            </p>
+        </div>
+
+        <div id="section">
+            <h2>在我国的分布</h2>
+            <p>
+                @Model.snake.province
+            </p>
+        </div>
+
+
+        <div id="section">
+            <h2>特征信息</h2>
+            <p>
+                @Model.snake.snakeIntro
+            </p>
+        </div>
+
+
+
+
+

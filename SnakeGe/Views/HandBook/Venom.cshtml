@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Ref = "Snake";
+    ViewBag.Title = "毒液志";
+}
+    <div class="text-center">
+        <div id="header">
+            <h1>毒液志————@Model.snakeName</h1>
+        </div>
+
+        <nav>
+            LD50<br>
+            KillMice<br>
+            VenomAmount<br>
+        </nav>
+
+        <div id="section">
+            <h1>LD50</h1>
+            <p>
+                @Model.LD50
+            </p>
+        </div>
+
+        <div id="section">
+            <h1>毒液量</h1>
+            <p>
+                @Model.venomAmount
+            </p>
+        </div>
+
+        <div id="footer">
+            格蛇社.毒液志
+        </div>
+    </div>
