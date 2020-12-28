@@ -12,7 +12,7 @@ namespace EpidemicManager.Controllers
     {
         public IActionResult Create()
         {
-            if (HttpContext.Session.GetString("userKind") != "user")
+          if (HttpContext.Session.GetString("userKind") != "用户")
             {
                 return RedirectToAction("Index", "Login", new { path = "QA /Create" });
             }
@@ -22,14 +22,13 @@ namespace EpidemicManager.Controllers
         public IActionResult Create_()
         {
             QAModel m = new QAModel();
-            m.ID_user = HttpContext.Session.GetString("userId");
+            m.ID_user = HttpContext.Session.GetString("ID"); //"2020000";// HttpContext.Session.GetString("ID");
             m.question = Request.Form["question"];
             m.date_q = DateTime.Now.ToString("yyyy-MM-dd");
             m.time_q = DateTime.Now.ToString("T");
-            
             Sql.Execute("INSERT INTO OnlineQ(ID,date,time,detail,isAns)  VALUES(@0,@1,@2,@3,@4)", m.ID_user, m.date_q, m.time_q, m.question,0);
             return RedirectToAction("Index_QA");//这个东西还没有
-
+            //return RedirectToAction("Answer_Index");
         }
         //12.10创建问题应该写好了
 
@@ -38,7 +37,7 @@ namespace EpidemicManager.Controllers
         //12.10回答索引也完成了
         public IActionResult Answer_Index()
         {
-            if (HttpContext.Session.GetString("userKind") != "exp")
+          if (HttpContext.Session.GetString("userKind") != "专家")
             {
                 return RedirectToAction("Index", "Login", new { path = "QA /Answer_Index" });
             }
@@ -64,7 +63,7 @@ namespace EpidemicManager.Controllers
         public IActionResult Answer()
         {
             QAModel m = new QAModel();
-            m.ID_exp = HttpContext.Session.GetString("userId");
+            m.ID_exp = HttpContext.Session.GetString("ID"); //"202001";// HttpContext.Session.GetString("ID");
             m.ID_question = Request.Form["question_id"];
             var name = Sql.Read("SELECT ID, detail,date,time FROM OnlineQ WHERE id_number=@0", m.ID_question);
             foreach (DataRow n in name)
@@ -80,16 +79,16 @@ namespace EpidemicManager.Controllers
         public IActionResult Answer_()
         {
             QAModel m = new QAModel();
-            m.ID_exp = HttpContext.Session.GetString("userId");
-            m.question = Request.Form["question"];
+            m.ID_exp = HttpContext.Session.GetString("ID"); //"202001";// HttpContext.Session.GetString("ID");
+            m.answer = Request.Form["answer"];
             m.date_q = DateTime.Now.ToString("yyyy-MM-dd");
             m.time_q = DateTime.Now.ToString("T");
-            m.ID_question= Request.Form["question_ID"];
-            Sql.Execute("INSERT INTO ExperAnswer(ID,date,time,detail,ID_Q)  VALUES(@0,@1,@2,@3,@4)", m.ID_user, m.date_q, m.time_q, m.question, m.ID_question);
+            m.ID_question= Request.Form["question_id"];
+            Sql.Execute("INSERT INTO ExperAnswer(ID,date,time,detail,ID_Q)  VALUES(@0,@1,@2,@3,@4)", m.ID_exp, m.date_q, m.time_q, m.answer, m.ID_question);
             //上面这句有问题
             //12.10最后那个isAns改了问题的ID属性，不知道数据库里有没有
             //我不知道这个表叫啥
-            Sql.Execute("UPDATE OnlineQ SET isAns = @0 WHERE id_number = @1", m.ID_question,1);
+            Sql.Execute("UPDATE OnlineQ SET isAns = @0 WHERE id_number = @1", 1,m.ID_question);
             return RedirectToAction("Answer_Index");
         }
 
@@ -99,7 +98,7 @@ namespace EpidemicManager.Controllers
         //12.10用户查看自己回答的目录
         public IActionResult Index_QA()
         {
-            if (HttpContext.Session.GetString("userKind") != "user")
+            if (HttpContext.Session.GetString("userKind") != "用户")
             {
                 return RedirectToAction("Index", "Login", new { path = "QA /Answer_Index" });
             }
@@ -107,8 +106,8 @@ namespace EpidemicManager.Controllers
             var list_d = new List<string>();
             var list_t = new List<string>();
             var list_dd = new List<string>();
-            var ID_user = HttpContext.Session.GetString("userId");
-            var name = Sql.Read("SELECT date,time detail,id_number FROM OnlineQ WHERE ID=@0 AND isAns=@1", ID_user,0);
+            var ID_user = HttpContext.Session.GetString("ID"); //"2020000";// HttpContext.Session.GetString("ID");
+            var name = Sql.Read("SELECT date,time, detail,id_number FROM OnlineQ WHERE ID=@0 AND isAns=@1", ID_user,0);
             var Con = 0;
             foreach (DataRow n in name)
             {
@@ -132,30 +131,35 @@ namespace EpidemicManager.Controllers
             var list_exp = new List<string>();
             var list_t_a = new List<string>();
             var list_d_a = new List<string>();
-            name = Sql.Read("SELECT date,time detail,id_number FROM OnlineQ WHERE ID=@0 AND isAns=@1", ID_user, 1);
+            var list_dd2 = new List<string>();
+            var list_d2 = new List<string>();
+            var list_q2 = new List<string>();
+            var list_t2 = new List<string>();
+            name = Sql.Read("SELECT date,time ,detail,id_number FROM OnlineQ WHERE ID=@0 AND isAns=@1", ID_user, 1);
             Con = 0;
             foreach (DataRow n in name)
             {
-                list_dd.Add(n[0].ToString());
-                list_t.Add(n[1].ToString());
-                list_d.Add(n[2].ToString());
-                list_q.Add(n[3].ToString());
+                list_dd2.Add(n[0].ToString());
+                list_t2.Add(n[1].ToString());
+                list_d2.Add(n[2].ToString());
+                list_q2.Add(n[3].ToString());
                 //从回答的表里找回答
-                var ans = Sql.Read("SELECT ID, detail,date,time FROM ExperAnswer WHERE id_number=@0", n[3].ToString());
+                var ans = Sql.Read("SELECT ID, detail,date,time FROM ExperAnswer WHERE ID_Q=@0", n[3].ToString());
                 foreach(DataRow a in ans)
                 {
                     list_exp.Add(a[0].ToString());
                     list_a.Add(a[1].ToString());
                     list_d_a.Add(a[2].ToString());
                     list_t_a.Add(a[3].ToString());
+                    Con++;
                 }
                 
-                Con++;
+                
             }
-            m.question_a = list_d;
-            m.ID_question_a = list_q;
-            m.time_q_a = list_t;
-            m.date_q_a = list_dd;
+            m.question_a = list_d2;
+            m.ID_question_a = list_q2;
+            m.time_q_a = list_t2;
+            m.date_q_a = list_dd2;
             m.answer = list_a;
             m.time_a = list_t_a;
             m.date_a = list_d_a;
