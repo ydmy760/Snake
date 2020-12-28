@@ -4,8 +4,9 @@
     var cssPath = $"/css/{ViewBag.Ref}.css";
     var jsPath = $"/js/{ViewBag.Ref}.js";
     var session = ViewContext.HttpContext.Session;
-    var userId = session.GetString("userId");
-    var userKind = session.GetString("userKind");
+    var userId = session.GetString("UserId");
+    var userKind = session.GetString("UserKind");
+    var userName = session.GetString("UserName");
 }
 
 <!DOCTYPE html>
@@ -26,22 +27,40 @@
     <nav class="navbar sticky-top navbar-expand-md navbar-light s_navbar s_nav-bg">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="~/res/brand.svg" width="30" height="30" class="d-inline-block align-top" />
+                <img src="~/res/snake.png" width="30" height="30" class="d-inline-block align-top" />
                 @siteName
             </a>
+            <div>Welcome</div>&ensp;@userName&ensp;@userKind
+            @if(userName != null)
+            {
+                <button class="btn btn-link" onclick="logout()">退出</button>
+            }
+            else
+            {
+                <button class="btn btn-link" onclick="login()">登录</button>
+            }
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" id="navigation">
-                    
                 </ul>
                 <form class="form-inline navbar-nav my-2 my-lg-0">
-                    
                 </form>
             </div>
         </div>
     </nav>
+    <script>
+        function logout() {
+            $.post("/Login/Logout", function () {
+                alert("success");
+                window.location.href = "/location";
+            })
+        }
+        function login() {
+            window.location.href = "/Login";
+        }
+    </script>
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -49,8 +68,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class="border-top footer text-muted"style="clear:both;">
+        <div class="container"style="clear:both;">
             &copy; 2020 - EpidemicManager - Privacy
         </div>
     </footer>
