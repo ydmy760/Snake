@@ -23,9 +23,11 @@
             }
             @if (Model.State == "success")
             {
-                <script>
-                    alert("success");
-                </script>
+        <script>
+            if (@Model.path!= null) {
+                location.href =@Model.path;
+            }
+        </script>
             }
             <div id="div1" style="padding:10px;">
                 <img src="~/res/snake.png" />
