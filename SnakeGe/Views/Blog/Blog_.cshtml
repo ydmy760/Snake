@@ -1,0 +1,47 @@
+﻿@model BlogModel
+@{
+    ViewBag.Ref = "Blog";
+    ViewBag.Title = "博客详情页";
+}
+
+<h3><strong>博客详情</strong></h3>
+
+
+<form method="post" action="Comment">
+    <div class="form-group">
+        <div class="col-sm-10">
+            @Model.title
+        </div>
+    </div>
+    <div class="form-group">
+        日期：@Model.date
+        时间：@Model.time
+    </div>
+    <div class="form-group">
+        详情：
+        @Model.content
+    </div>
+    <div class="form-group">
+        评论：
+        @for (int i = 0; i < @Model.n; i++)
+        {
+            <div>
+                评论人：
+                @Model.comment[i].userID
+                评论内容
+                @Model.comment[i].content
+                <br />
+            </div>
+        }
+
+    </div>
+    <div class="col-sm-10">
+        <input type="text" style="display:none" name="blog_id" class="form-control" value="@Model.BlogID" readonly />
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">增加评论</button>
+        </div>
+    </div>
+</form>
